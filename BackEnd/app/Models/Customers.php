@@ -20,4 +20,8 @@ class Customers extends Model
         return $this->hasMany(Customer_history::class, 'customer_id');
     }
     //Bisnu End
+    public function billings()
+    {
+        $this->hasMany(Billing::class, 'customer_id');
+    }
 }

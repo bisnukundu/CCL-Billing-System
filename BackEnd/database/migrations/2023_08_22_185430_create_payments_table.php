@@ -27,6 +27,7 @@ return new class extends Migration
         });
     }
 
+    // payments table
     /**
      * Reverse the migrations.
      */

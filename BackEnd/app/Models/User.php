@@ -47,4 +47,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Diposit::class, 'user_id');
     }
+
+    public function payments (){
+        $this->hasMany(Payment::class, "user_id");
+    }
 }
