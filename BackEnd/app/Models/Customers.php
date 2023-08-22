@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Customers extends Model
 {
     use HasFactory;
+
+
+    public function diposit()
+    {
+        return $this->Hasmany(Diposit::class, 'customer_id');
+    }
 }

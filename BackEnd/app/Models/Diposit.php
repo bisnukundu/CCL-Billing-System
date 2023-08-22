@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Diposit extends Model
 {
     use HasFactory;
+
+
+    
 }
