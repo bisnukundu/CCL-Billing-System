@@ -24,4 +24,8 @@ class Customers extends Model
     {
         $this->hasMany(Billing::class, 'customer_id');
     }
+    public function diposit()
+    {
+        return $this->Hasmany(Diposit::class, 'customer_id');
+    }
 }
