@@ -14,11 +14,11 @@ return new class extends Migration {
             $table->id();
 
             $table->foreignId('customer_id')->constrained(
-                'customer',
+                'customers',
                 'id'
             );
-            $table->int('add_deposit')->nullable();
-            $table->int('return_deposit')->nullable();
+            $table->integer('add_deposit')->nullable();
+            $table->integer('return_deposit')->nullable();
             $table->foreignId('user_id')->constrained(
                 'users',
                 'id'

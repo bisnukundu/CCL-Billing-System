@@ -15,13 +15,11 @@ return new class extends Migration
             $table->id();
             $table->integer('collection_amount');
             $table->string('collection_type');
-            $table->bigInteger('user_id');
-            $table->bigInteger('billing_id');
-            $table->foreignId('user_id')->constrained()
+            $table->foreignId('user_id')->constrained('users', 'id' )
                 ->onUpdate('cascade')
                 ->onDelete('cascade');;
             $table->foreignId('billing_id')
-                ->constrained()->onUpdate('cascade')
+                ->constrained('billings', 'id')->onUpdate('cascade')
                 ->onDelete('cascade');;
             $table->timestamps();
         });
