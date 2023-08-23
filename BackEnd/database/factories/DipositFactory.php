@@ -19,6 +19,8 @@ class DipositFactory extends Factory
         return [
             'add_deposit' => fake()->randomElement([500, 1000, 2000]),
             'return_deposit' => fake()->randomElement([500, 1000, 2000]),
+            'customer_id' => '1',
+            'user_id' => '1'
         ];
     }
 }

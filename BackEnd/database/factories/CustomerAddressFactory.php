@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Customers;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +23,8 @@ class customerAddressFactory extends Factory
             'road' => fake()->address(),
             'building_name' => fake()->name(),
             'area' => ucfirst(fake()->word()),
+            'customer_id' => fake()->randomElement(Customers::pluck('id')->toArray()),
 
-      ];
+        ];
     }
 }
