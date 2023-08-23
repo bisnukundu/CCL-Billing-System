@@ -12,11 +12,11 @@ class Payment extends Model
 
     public function billing()
     {
-        $this->belongsTo(Billing::class);
+        return $this->belongsTo(Billing::class);
     }
 
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }

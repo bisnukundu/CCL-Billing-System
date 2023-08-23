@@ -9,6 +9,7 @@ class Customers extends Model
 {
     use HasFactory;
 
+    protected $fillable = ["name", "mobile", "customer_type", "monthly_bill", "additional_charge", "discount", "advance", "active", "connection_date", "bill_genarate_status", "note", "bill_collector", "number_of_connection"];
     //Bisnu Start
     function customer_address()
     {
@@ -22,7 +23,7 @@ class Customers extends Model
     //Bisnu End
     public function billings()
     {
-        $this->hasMany(Billing::class, 'customer_id');
+        return $this->hasMany(Billing::class, 'customer_id');
     }
     public function diposit()
     {

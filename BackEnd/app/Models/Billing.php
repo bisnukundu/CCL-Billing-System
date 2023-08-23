@@ -13,11 +13,11 @@ class Billing extends Model
 
     public function payments()
     {
-        $this->hasMany(Payment::class);
+        return $this->hasMany(Payment::class,'billing_id');
     }
 
     public function customer()
     {
-        $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class);
     }
 }

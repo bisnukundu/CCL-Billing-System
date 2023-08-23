@@ -22,7 +22,7 @@ class PaymentFactory extends Factory
             "collection_amount" => fake()->randomElement([250, 350, 450, 650]),
             "collection_type" => fake()->randomElement(['cash', 'cheque', 'bkash', 'nagad']),
             "user_id" => fake()->numberBetween(1, 20),
-            "billing_id" => fake()->numberBetween(Billing::pluck('id')->toArray()),
+            "billing_id" => fake()->numberBetween(1,2),
         ];
     }
 }
