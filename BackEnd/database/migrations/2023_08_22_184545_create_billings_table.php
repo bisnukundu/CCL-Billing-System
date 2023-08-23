@@ -20,7 +20,6 @@ return new class extends Migration
             $table->bigInteger('advance');
             $table->dateTime('billing_month');
             $table->integer('dues');
-    
             $table->foreignId('customer_id')->constrained('customers', 'id')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

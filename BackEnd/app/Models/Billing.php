@@ -9,11 +9,15 @@ class Billing extends Model
 {
     use HasFactory;
 
-    public function payments (){
+    protected $fillable = ["bill_amount", "addtional_charge",     "discount","vat ","advance", "billing_month","dues",     "customer_id"];
+
+    public function payments()
+    {
         $this->hasMany(Payment::class);
     }
 
-    public function customer(){
+    public function customer()
+    {
         $this->belongsTo(Customer::class);
     }
 }
