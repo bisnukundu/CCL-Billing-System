@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class diposiFactory extends Factory
+class DipositFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,7 +19,6 @@ class diposiFactory extends Factory
         return [
             'add_deposit' => fake()->randomElement([500, 1000, 2000]),
             'return_deposit' => fake()->randomElement([500, 1000, 2000]),
-
         ];
     }
 }
