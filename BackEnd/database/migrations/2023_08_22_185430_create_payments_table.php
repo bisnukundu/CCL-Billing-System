@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('collection_type');
             $table->foreignId('user_id')->constrained('users', 'id' )
                 ->onUpdate('cascade')
-                ->onDelete('cascade');;
+                ->onDelete('cascade');
             $table->foreignId('billing_id')
                 ->constrained('billings', 'id')->onUpdate('cascade')
-                ->onDelete('cascade');;
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

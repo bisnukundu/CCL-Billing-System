@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Billing;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,11 +17,12 @@ class PaymentFactory extends Factory
      */
     public function definition(): array
     {
+        
         return [
             "collection_amount" => fake()->randomElement([250, 350, 450, 650]),
             "collection_type" => fake()->randomElement(['cash', 'cheque', 'bkash', 'nagad']),
             "user_id" => fake()->numberBetween(1, 20),
-            "billing_id" => fake()->numberBetween(1, 20),
+            "billing_id" => fake()->numberBetween(Billing::pluck('id')->toArray()),
         ];
     }
 }

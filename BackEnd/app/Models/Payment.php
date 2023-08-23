@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     use HasFactory;
+    protected $fillable = ["collection_amount","collection_type","user_id","billing_id"];
 
     public function billing()
     {
