@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Billing;
 use App\Models\Customers;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 
 class BillingController extends Controller
@@ -13,7 +14,9 @@ class BillingController extends Controller
      */
     public function index()
     {
-        $bills = Customers::with('billings.payments')->get();
+        $bills = Customers::with('billings.payments.user')->get();
+        // $customer = Billing::with('customer')->get();
+        // $customer = Payment::with('user','billing.customer')->get();
         // $bills = Customers::all();
 
         return response()->json($bills);
