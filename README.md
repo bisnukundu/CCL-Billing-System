@@ -4,3 +4,5 @@ It's an Open-Source Billing System we are developing.
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+## How to use this application?
