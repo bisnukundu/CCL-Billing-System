@@ -14,12 +14,12 @@ class BillingController extends Controller
      */
     public function index()
     {
-        $bills = Customers::with('billings.payments.user')->get();
+        $billingHistory = Customers::with('billings.payments.user')->get();
         // $customer = Billing::with('customer')->get();
         // $customer = Payment::with('user','billing.customer')->get();
         // $bills = Customers::all();
 
-        return response()->json($bills);
+        return response()->json($billingHistory);
     }
 
     /**
