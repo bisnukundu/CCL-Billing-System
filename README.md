@@ -2,4 +2,4 @@
 It's an Open-Source Billing System we are developing.
 ## Contributors
 
-@all-contributors bot
+@all-contributors please add @bisnukundu for documentation
