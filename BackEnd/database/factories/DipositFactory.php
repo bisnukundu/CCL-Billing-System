@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Customers;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +21,6 @@ class DipositFactory extends Factory
             'add_deposit' => fake()->randomElement([500, 1000, 2000]),
             'return_deposit' => fake()->randomElement([500, 1000, 2000]),
             'customer_id' => '1',
-            'user_id' => '1'
-        ];
+            'user_id' => fake()->randomElement(Customers::pluck('id')->get())];
     }
 }
