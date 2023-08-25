@@ -14,12 +14,6 @@ class BillingController extends Controller
      */
     public function index()
     {
-        $billingHistory = Customers::with('billings.payments.user')->get();
-        // $customer = Billing::with('customer')->get();
-        // $customer = Payment::with('user','billing.customer')->get();
-        // $bills = Customers::all();
-
-        return response()->json($billingHistory);
     }
 
     /**
@@ -43,7 +37,9 @@ class BillingController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $billingHistory = Customers::with('billings.payments.user')->where('id', $id)->get();
+
+        return response()->json($billingHistory);
     }
 
     /**
