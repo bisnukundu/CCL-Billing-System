@@ -7,7 +7,7 @@
 /vendor
 /.idea/
 .idea/workspace.xml
-/BackEnd/.idea
+/BackEnd/.idea/workspace.xml
 .env
 .env.backup
 .env.production
