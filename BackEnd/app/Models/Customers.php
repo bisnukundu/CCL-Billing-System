@@ -36,4 +36,7 @@ class Customers extends Model
     {
         return $this->Hasmany(Diposit::class, 'customer_id');
     }
+//    function total_deposit(){
+//        return $this->hasMany(Diposit::class,'customer_id')->sum('add_deposit');
+//    }
 }

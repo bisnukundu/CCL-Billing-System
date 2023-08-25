@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Customers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-
 
 class CustomersController extends Controller
 {
@@ -27,10 +27,12 @@ class CustomersController extends Controller
     //    Get all customers
     function index()
     {
+//        $total_diposit = Customers::all()->diposit()->sum('add_deposit');
+//        return $total_diposit;
         return response()->json(['data' => Customers::with(['customer_address' => function ($query) {
             $query->latest()->limit(1);
-        }, 'diposit' => function ($query) {
-            $query->latest()->limit(1);
+        }])->withCount(['diposit as deposit' => function ($query) {
+            $query->select(DB::raw('sum(add_deposit) - sum(return_deposit)'));
         }])->get(), 'message' => "All Customers Get Successfully"]);
     }
 

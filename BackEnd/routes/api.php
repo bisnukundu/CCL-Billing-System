@@ -16,4 +16,6 @@ Route::get('/customers', [CustomersController::class, 'index']);
 Route::post('/customer', [CustomersController::class, 'create']);
 Route::delete('customer/{id}', [CustomersController::class, 'delete']);
 Route::put('customer/{id}', [CustomersController::class, 'customer_update']);
+
+Route::resource('/diposit', \App\Http\Controllers\DipositController::class);
 //Bisnu End

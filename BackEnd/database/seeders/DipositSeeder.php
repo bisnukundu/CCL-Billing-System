@@ -13,6 +13,6 @@ class DipositSeeder extends Seeder
      */
     public function run(): void
     {
-        Diposit::factory(20)->create();
+        Diposit::factory(1000)->create();
     }
 }
