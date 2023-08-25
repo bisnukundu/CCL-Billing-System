@@ -13,12 +13,12 @@ class Customers extends Model
     //Bisnu Start
     function customer_address()
     {
-        return $this->hasMany(Customer_address::class, 'customer_id');
+        return $this->hasMany(CustomerAddress::class, 'customer_id');
     }
 
     function customer_history()
     {
-        return $this->hasMany(Customer_history::class, 'customer_id');
+        return $this->hasMany(CustomerHistory::class, 'customer_id');
     }
     //Bisnu End
     // Nafiz Start

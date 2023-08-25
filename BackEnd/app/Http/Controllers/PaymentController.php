@@ -53,9 +53,9 @@ class PaymentController extends Controller
             ]);
             CustomerHistory::create([
                 'transection_type' => 'New Payment',
-                'description' => 'New Payment',
-                'customer_id' => 'New Payment',
-                'user_id' => 'New Payment',
+                'description' => $request->paymentAmount . ' New Payment Received!',
+                'customer_id' => 1,
+                'user_id' => 1,
             ]);
             return response()->json(['message' => 'success', 'data' => $data], 200);
         } catch (Exception $e) {

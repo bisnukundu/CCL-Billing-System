@@ -23,8 +23,8 @@ return new class extends Migration {
             $table->string('connection_date')->nullable();
             $table->string('bill_genarate_status')->nullable();
             $table->string('note')->nullable();
-            $table->string('bill_collector');
-            $table->integer('number_of_connection');
+            $table->string('bill_collector')->nullable();
+            $table->integer('number_of_connection')->nullable()->default(1);
             $table->timestamps();
 
         });
