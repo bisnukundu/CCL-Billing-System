@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Validator;
 
 class CustomersController extends Controller
 {
-    protected $validate_input_arr = ['name' => 'required|string|max:100',
+    protected $validate_input_arr = [
+        'name' => 'required|string|max:100',
         'mobile' => 'required|string|max:14',
         'customer_type' => 'required|string',
         'monthly_bill' => 'required|numeric',
@@ -20,9 +21,10 @@ class CustomersController extends Controller
         'connection_date' => 'nullable|date',
         'note' => 'nullable|string',
         'bill_collector' => 'nullable|string',
-        'number_of_connection' => 'nullable|integer'];
+        'number_of_connection' => 'nullable|integer'
+    ];
 
-//    Get all customers
+    //    Get all customers
     function index()
     {
         return response()->json(['data' => Customers::with(['customer_address' => function ($query) {
@@ -32,7 +34,7 @@ class CustomersController extends Controller
         }])->get(), 'message' => "All Customers Get Successfully"]);
     }
 
-//    Create new Customer
+    //    Create new Customer
     function create(Request $request)
     {
         $validator = Validator::make($request->all(), $this->validate_input_arr);
@@ -105,6 +107,5 @@ class CustomersController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
-
     }
 }

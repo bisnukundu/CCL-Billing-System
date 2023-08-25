@@ -21,10 +21,17 @@ class Customers extends Model
         return $this->hasMany(CustomerHistory::class, 'customer_id');
     }
     //Bisnu End
+    // Nafiz Start
     public function billings()
     {
         return $this->hasMany(Billing::class, 'customer_id');
     }
+    // get last bill for payment
+    public function lastBill()
+    {
+        return $this->hasMany(Billing::class, 'customer_id')->latest()->take(1)->get();
+    }
+    // Nafiz End
     public function diposit()
     {
         return $this->Hasmany(Diposit::class, 'customer_id');
