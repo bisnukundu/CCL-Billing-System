@@ -24,4 +24,10 @@ Route::delete('customer/{id}', [CustomersController::class, 'delete']);
 Route::put('customer/{id}', [CustomersController::class, 'customer_update']);
 
 Route::resource('/diposit', \App\Http\Controllers\DipositController::class);
+
+Route::get('/test', function () {
+    return "hello";
+})->middleware('auth');
+Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
+Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
 //Bisnu End

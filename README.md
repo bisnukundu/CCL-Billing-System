@@ -6,6 +6,7 @@ It's an Open-Source Billing System we are developing.
 * [Bisnu Kundu](https://github.com/bisnukundu)
 * [Nafiz](https://github.com/Ms-Nafiz)
 * [Abram](https://github.com/AbramKhan)
+* [Naimul](https://github.com/Naimul007A)
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## How to use this application?
