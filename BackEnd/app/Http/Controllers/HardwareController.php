@@ -142,6 +142,7 @@ class HardwareController extends Controller
             return response()->json($e->getMessage(), 422);
         }
     }
+    // add customer history
     public function addCustomerHistory($customerId, $userId, $transType, $des)
     {
         CustomerHistory::create([
