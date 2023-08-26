@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Hardware;
 use Illuminate\Http\Request;
+use App\Models\CustomerHistory;
 use Illuminate\Support\Facades\Validator;
 
 class HardwareController extends Controller
@@ -47,6 +48,9 @@ class HardwareController extends Controller
                 'customer_id' => $request->customerId,
             ]);
             if ($newHardware) {
+                // add customer history
+                // get user id from session
+                $this->addCustomerHistory($request->customerId, 1, 'New Hardware', $request->stbId . ' Hardware assign to customer!');
                 return response()->json(['message' => 'New Hardware added!', "data" => $newHardware]);
             } else {
                 return response()->json(["message" => 'Something went wrong!']);
@@ -104,8 +108,10 @@ class HardwareController extends Controller
 
                 $updateHardware->stb_id = $request->stbId;
                 $updateHardware->stb_type = $request->stbType;
+                $updateHardware->customer_id = $request->customerId;
                 $updateHardware->save();
-
+                //create history
+                $this->addCustomerHistory($request->customerId, 1, 'Hardware Modify', $request->stbId . ' Modified hardware assign to customer!');
                 return response()->json(['message' => 'Hardware Successfully Updated!'], 200);
             } else {
                 return response()->json(['message' => 'Error', 'data' => 'No data Found or Invalid Id']);
@@ -125,6 +131,9 @@ class HardwareController extends Controller
             if ($hardware) {
                 $hardware->delete();
 
+                // add customer history
+                // get user id from session
+                $this->addCustomerHistory($hardware->customer_id, 1, 'Hardware Deleted', $hardware->stb_id . ' Hardware has been deleted!');
                 return response()->json(['message' => 'Hardware has been deleted!']);
             } else {
                 return response()->json(["message" => 'No data found or invalid input criteria']);
@@ -132,5 +141,14 @@ class HardwareController extends Controller
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 422);
         }
+    }
+    public function addCustomerHistory($customerId, $userId, $transType, $des)
+    {
+        CustomerHistory::create([
+            'transection_type' => $transType,
+            'description' => $des,
+            'customer_id' => $customerId,
+            'user_id' => $userId, // get user id from session or cookies
+        ]);
     }
 }
