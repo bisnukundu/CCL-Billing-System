@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
                 DipositSeeder::class,
                 BillingSeeder::class,
                 PaymentSeeder::class,
+                HardwareSeeder::class,
             ]
         );
     }

@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\CustomerAddress;
+use App\Models\Hardware;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CustomerAddressSeeder extends Seeder
+class HardwareSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        CustomerAddress::factory(50)->create();
+        Hardware::factory(50)->create();
     }
 }
