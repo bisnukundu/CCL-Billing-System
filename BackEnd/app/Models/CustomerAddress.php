@@ -9,6 +9,15 @@ class CustomerAddress extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'house',
+        'flat',
+        'road',
+        'building_name',
+        'area',
+        'customer_id',
+    ];
+
     function customer()
     {
         return $this->belongsTo(Customers::class, 'id');

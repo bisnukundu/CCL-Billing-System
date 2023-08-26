@@ -13,6 +13,6 @@ class BillingSeeder extends Seeder
      */
     public function run(): void
     {
-        Billing::factory(20)->create();
+        Billing::factory(50)->create();
     }
 }

@@ -27,9 +27,13 @@ class Customers extends Model
         return $this->hasMany(Billing::class, 'customer_id');
     }
     // get last bill for payment
-    public function lastBill()
+    // public function lastBill()
+    // {
+    //     return $this->hasMany(Billing::class, 'customer_id');
+    // }
+    public function hardware()
     {
-        return $this->hasMany(Billing::class, 'customer_id')->latest()->take(1)->get();
+        return $this->hasMany(Hardeware::class, 'customer_id');
     }
     // Nafiz End
     public function diposit()
