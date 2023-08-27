@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CustomerRequest;
 use App\Http\Resources\CustomerResource;
 use App\Models\Customers;
 use App\Helpers\ResponseHelper;
@@ -13,19 +14,6 @@ class CustomersController extends Controller
 {
     use ResponseHelper;
 
-    protected $validate_input_arr = [
-        'name' => 'required|string|max:100',
-        'mobile' => 'required|string|max:14',
-        'customer_type' => 'required|string',
-        'monthly_bill' => 'required|numeric',
-        'additional_charge' => 'required|numeric',
-        'discount' => 'required|numeric',
-        'active' => 'required|boolean',
-        'connection_date' => 'nullable|date',
-        'note' => 'nullable|string',
-        'bill_collector' => 'nullable|string',
-        'number_of_connection' => 'nullable|integer'
-    ];
 
     //    Get all customers
     function index()
@@ -40,13 +28,9 @@ class CustomersController extends Controller
     }
 
     //    Create new Customer
-    function create(Request $request)
+    function create(CustomerRequest $request)
     {
-        $validator = Validator::make($request->all(), $this->validate_input_arr);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
+        $request->validate();
 
         try {
             $new_customer = Customers::create([
@@ -75,7 +59,7 @@ class CustomersController extends Controller
             return new CustomerResource($new_customer);
 
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 500);
+            return $this->response_helper($e->getMessage());
         }
     }
 
@@ -94,13 +78,10 @@ class CustomersController extends Controller
         }
     }
 
-    function customer_update(Request $request, $id)
+    function customer_update(CustomerRequest $request, $id)
     {
-        $validator = Validator::make($request->all(), $this->validate_input_arr);
+        $request->validate();
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
         try {
             $new_customer = Customers::find($id);
 
