@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1af8731c-e273-4100-b951-1fe68f3446f3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/BackEnd/app/Helpers/ResponseHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/CCL-Billing-System.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CCL-Billing-System.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/app/Http/Controllers/CustomersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/app/Http/Controllers/CustomersController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,11 +50,11 @@
                 <list>
                   <RecentBranch>
                     <option name="branchName" value="bisnu" />
-                    <option name="lastUsedInstant" value="1692994546" />
+                    <option name="lastUsedInstant" value="1693079093" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="main" />
-                    <option name="lastUsedInstant" value="1692994424" />
+                    <option name="lastUsedInstant" value="1693078990" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="abram" />
@@ -300,6 +304,15 @@
       <path value="$PROJECT_DIR$/BackEnd/vendor/dragonmantank/cron-expression" />
       <path value="$PROJECT_DIR$/BackEnd/vendor/graham-campbell/result-type" />
       <path value="$PROJECT_DIR$/BackEnd/vendor/composer" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/lcobucci/jwt" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/lcobucci/clock" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/stella-maris/clock" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/tymon/jwt-auth" />
     </include_path>
   </component>
   <component name="ProjectId" id="2UG3UsqMM59O3bf1evgGGJmZ3hh" />
@@ -349,6 +362,8 @@
       <workItem from="1692899444178" duration="11631000" />
       <workItem from="1692960760930" duration="1387000" />
       <workItem from="1692991057344" duration="3197000" />
+      <workItem from="1693067442854" duration="9997000" />
+      <workItem from="1693154277021" duration="6444000" />
     </task>
     <servers />
   </component>
