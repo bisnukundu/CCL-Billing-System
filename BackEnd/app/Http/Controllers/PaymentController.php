@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PaymentResource;
 use App\Models\CustomerHistory;
 use App\Models\Customers;
 use App\Models\Payment;
@@ -58,6 +59,7 @@ class PaymentController extends Controller
                 'user_id' => 1,
             ]);
             return response()->json(['message' => 'success', 'data' => $data], 200);
+            
         } catch (Exception $e) {
             return response()->json($e->getMessage(), 422);
         };
@@ -75,6 +77,7 @@ class PaymentController extends Controller
 
         if ($billAndPayment->count() > 0) {
             return response()->json(["message" => 'Success', "data" => $billAndPayment]);
+            // return PaymentResource::collection($billAndPayment);
         } else {
             return response()->json(['message' => 'Error', 'data' => 'No data Found or Invalid Id']);
         }
