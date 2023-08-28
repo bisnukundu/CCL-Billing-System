@@ -234,6 +234,15 @@
       <path value="$PROJECT_DIR$/BackEnd/vendor/dragonmantank/cron-expression" />
       <path value="$PROJECT_DIR$/BackEnd/vendor/graham-campbell/result-type" />
       <path value="$PROJECT_DIR$/BackEnd/vendor/composer" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/lcobucci/jwt" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/lcobucci/clock" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/stella-maris/clock" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/BackEnd/vendor/tymon/jwt-auth" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
