@@ -23,14 +23,14 @@ class CustomersController extends Controller
         }])->withCount(['diposit as deposit' => function ($query) {
             $query->select(DB::raw('sum(add_deposit) - sum(return_deposit)'));
         }])->get();
-
+//        return response()->json(['data' => $customers]);
         return CustomerResource::collection($customers);
     }
 
     //    Create new Customer
     function create(CustomerRequest $request)
     {
-        $request->validate();
+        $request->validated();
 
         try {
             $new_customer = Customers::create([
@@ -80,7 +80,7 @@ class CustomersController extends Controller
 
     function customer_update(CustomerRequest $request, $id)
     {
-        $request->validate();
+        $request->validated();
 
         try {
             $new_customer = Customers::find($id);

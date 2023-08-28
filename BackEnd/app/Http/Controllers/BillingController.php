@@ -2,18 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
+use App\Http\Resources\BillingResource;
 use App\Models\Billing;
 use App\Models\Customers;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Exception;
 
 class BillingController extends Controller
 {
+    use ResponseHelper;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+
     }
 
     /**
@@ -37,9 +43,13 @@ class BillingController extends Controller
      */
     public function show(string $id)
     {
-        $billingHistory = Customers::with('billings.payments.user')->where('id', $id)->get();
+        try {
+            $billings = Billing::where('customer_id', $id)->with(['payments.user', 'customer'])->latest()->firstOrFail();
+            return new BillingResource($billings);
+        } catch (\Exception $err) {
+            return $this->response_helper($err->getMessage());
+        }
 
-        return response()->json($billingHistory);
     }
 
     /**

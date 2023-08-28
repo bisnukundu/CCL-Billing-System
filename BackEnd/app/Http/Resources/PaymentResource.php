@@ -16,19 +16,12 @@ class PaymentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'mobile' => $this->mobile,
-            'customer_type' => $this->customer_type,
-            'monthly_bill' => $this->monthly_bill,
-            'additional_charge' => $this->additional_charge,
-            'discount' => $this->discount,
-            'advance' => $this->advance,
-            'active' => $this->active,
-            'connection_date' => $this->connection_date,
-            'note' => $this->note,
-            'bill_collector' => $this->bill_collector,
-            'number_of_connection' => $this->number_of_connection,
-            'billings' => "" // will come from billing resource,
+            'collection_amount' => $this->collection_amount,
+            'collection_type' => $this->collection_type,
+            'user_id' => $this->user_id,
+            'billing_id' => $this->billing_id,
+            'user' => $this->user,
+            'billing' => new BillingResource($this->billing)
         ];
     }
 }

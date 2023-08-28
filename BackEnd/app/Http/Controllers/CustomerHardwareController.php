@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CustomerHardwareRequest;
 use App\Models\Hardware;
 use App\Models\Customers;
 use Illuminate\Http\Request;
+use App\Helpers\ResponseHelper;
 use App\Models\CustomerHistory;
 use App\Models\CustomerHardware;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\CustomerHardwareRequest;
 use App\Http\Resources\CustomerHardwareResource;
 
 class CustomerHardwareController extends Controller
 {
+    use ResponseHelper;
     /**
      * Display a listing of the resource.
      */
@@ -52,7 +54,7 @@ class CustomerHardwareController extends Controller
                 return response()->json(["message" => 'Something went wrong!']);
             }
         } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 422);
+            return $this->response_helper($e->getMessage());
         }
     }
 
@@ -71,7 +73,7 @@ class CustomerHardwareController extends Controller
                 return response()->json(["message" => 'No data found or invalid input criteria']);
             }
         } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 422);
+            return $this->response_helper($e->getMessage());
         }
     }
 
@@ -101,7 +103,7 @@ class CustomerHardwareController extends Controller
             $this->addCustomerHistory($updateHardware->customer_id, 1, 'Hardware Type Modify', $request->stbType . ' Modified as hardeare type!');
             return response()->json(['message' => 'Hardware Successfully Updated!'], 200);
         } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 422);
+            return $this->response_helper($e->getMessage());
         }
     }
 
@@ -124,7 +126,7 @@ class CustomerHardwareController extends Controller
                 return response()->json(["message" => 'No data found or invalid input criteria']);
             }
         } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 422);
+            return $this->response_helper($e->getMessage());
         }
     }
     // add customer history
