@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BillingResource;
 use App\Models\Billing;
 use App\Models\Customers;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Exception;
 
 class BillingController extends Controller
 {
@@ -14,8 +16,13 @@ class BillingController extends Controller
      */
     public function index()
     {
+        try {
+            $billings = Billing::with('customer')->latest()->get();
+            return BillingResource::collection($billings);
+        }catch (Exception $e){
+            return response()->json(['data' => [], 'message' => $e->getMessage()], 500);
+        }
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -37,9 +44,7 @@ class BillingController extends Controller
      */
     public function show(string $id)
     {
-        $billingHistory = Customers::with('billings.payments.user')->where('id', $id)->get();
-
-        return response()->json($billingHistory);
+        //
     }
 
     /**

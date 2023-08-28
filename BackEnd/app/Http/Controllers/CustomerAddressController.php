@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CustomerAddressResource;
+use App\Http\Resources\CustomerResource;
 use App\Models\Customers;
 use Illuminate\Http\Request;
 use App\Models\CustomerAddress;
@@ -30,7 +32,7 @@ class CustomerAddressController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $validate = Validator::make(
             $request->all(),
             [
@@ -67,19 +69,19 @@ class CustomerAddressController extends Controller
      */
     public function show(string $id)
     {
-
+        /*
+         * I think this query is technically wrong. We need to find customer address by customer id, So the query will be something like that
+         * $customer_address = CustomerAddress::where('customer_id', $id)->first(); (For single address)
+         * return new CustomerAddressResource($customer_address);
+         * */
         try {
-            $address = Customers::with(['customer_address' => function ($q) {
+            $customer_address = Customers::with(['customer_address' => function ($q) {
                 $q->latest('created_at')->take(1);
             }])->where('id', $id)->get();
-            if ($address) {
-                return response()->json(["data" => $address, "message" => 'Success']);
-            } else {
-                return response()->json(["message" => 'No data found or invalid input criteria']);
-            }
         } catch (\Exception $e) {
-            return response()->json($e->getMessage());
+            return response()->json(["message" => $e->getMessage()]);
         }
+        return CustomerResource::collection($customer_address);
     }
 
     /**

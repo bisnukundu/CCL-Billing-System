@@ -23,7 +23,7 @@ class BillingResource extends JsonResource
             "advance"          => $this->advance,
             "billing_month"    => $this->billing_month,
             "dues"             => $this->dues,
-            "customer_id"      => $this->customer_id,
+            "customer"      => new CustomerResource($this->customer),
         ];
     }
 }

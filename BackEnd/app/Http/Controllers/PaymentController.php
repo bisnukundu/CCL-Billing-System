@@ -59,7 +59,7 @@ class PaymentController extends Controller
                 'user_id' => 1,
             ]);
             return response()->json(['message' => 'success', 'data' => $data], 200);
-            
+
         } catch (Exception $e) {
             return response()->json($e->getMessage(), 422);
         };
@@ -70,14 +70,19 @@ class PaymentController extends Controller
      */
     public function show(string $id)
     {
-
+        /**
+         *  I think this query is technically wrong. We show payment record by payment id, or if we want to show payment record by customer id those case query will be different.
+         *  $payment = Billing::where('customer_id', $id)->first(); //If we want to get bill by customer id
+         *  $payment = Billing::findOrFail($id); //If we want to get bill by payment id
+         *  return new BillingResource($payment);
+         *  //Remove this note after review the code
+         * */
         $billAndPayment = Customers::with(['billings' => function ($q) {
             $q->latest('created_at')->take(1);
         }, 'billings.payments.user'])->where('id', $id)->get();
 
         if ($billAndPayment->count() > 0) {
             return response()->json(["message" => 'Success', "data" => $billAndPayment]);
-            // return PaymentResource::collection($billAndPayment);
         } else {
             return response()->json(['message' => 'Error', 'data' => 'No data Found or Invalid Id']);
         }
