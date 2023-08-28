@@ -23,7 +23,7 @@ class CustomersController extends Controller
         }])->withCount(['diposit as deposit' => function ($query) {
             $query->select(DB::raw('sum(add_deposit) - sum(return_deposit)'));
         }])->get();
-
+//        return response()->json(['data' => $customers]);
         return CustomerResource::collection($customers);
     }
 
