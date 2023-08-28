@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DepositResource;
 use App\Models\Customers;
 use App\Models\Diposit;
 use Illuminate\Http\Request;
@@ -39,8 +40,8 @@ class DipositController extends Controller
      */
     public function show(string $id)
     {
-        $deposit = Customers::find($id)->diposit()->get();
-        return response()->json(['data' => $deposit, 'message' => 'Diposit get successfully'], 200);
+        $deposit = Customers::find($id)->diposit()->with(['user', 'customer'])->get();
+        return DepositResource::collection($deposit);
     }
 
     /**

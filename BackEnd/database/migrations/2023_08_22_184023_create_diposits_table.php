@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->foreignId('customer_id')->constrained(
                 'customers',
                 'id'
-            );
+            )->onUpdate('cascade')->onDelete('cascade');
             $table->integer('add_deposit')->nullable();
             $table->integer('return_deposit')->nullable();
             $table->foreignId('user_id')->constrained(

@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/BackEnd/tests" isTestSource="true" packagePrefix="Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/BackEnd/tests/Feature" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/BackEnd/tests/Unit" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/BackEnd/spec" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dflydev/dot-access-data" />
@@ -232,6 +233,15 @@
       <excludeFolder url="file://$MODULE_DIR$/BackEnd/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/BackEnd/vendor/voku/portable-ascii" />
       <excludeFolder url="file://$MODULE_DIR$/BackEnd/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/BackEnd/vendor/doctrine/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/BackEnd/vendor/doctrine/dbal" />
+      <excludeFolder url="file://$MODULE_DIR$/BackEnd/vendor/doctrine/deprecations" />
+      <excludeFolder url="file://$MODULE_DIR$/BackEnd/vendor/doctrine/event-manager" />
+      <excludeFolder url="file://$MODULE_DIR$/BackEnd/vendor/lcobucci/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/BackEnd/vendor/lcobucci/jwt" />
+      <excludeFolder url="file://$MODULE_DIR$/BackEnd/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/BackEnd/vendor/stella-maris/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/BackEnd/vendor/tymon/jwt-auth" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

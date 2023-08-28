@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\HardwareResource;
 use App\Models\Hardware;
 use Illuminate\Http\Request;
 use App\Models\CustomerHistory;
@@ -14,8 +15,7 @@ class HardwareController extends Controller
      */
     public function index()
     {
-        $allHardware = Hardware::all();
-        return response()->json(['message' => 'Success', 'data' => $allHardware]);
+        return HardwareResource::collection(Hardware::with('customer')->latest()->get());
     }
 
     /**
@@ -67,15 +67,10 @@ class HardwareController extends Controller
     {
         try {
             $showHardware = Hardware::find($id);
-            if ($showHardware) {
-
-                return response()->json(['message' => 'Hardware has been deleted!', "data" => $showHardware]);
-            } else {
-                return response()->json(["message" => 'No data found or invalid input criteria']);
-            }
         } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 422);
+            return response()->json(["message" => $e->getMessage()]);
         }
+        return new HardwareResource($showHardware);
     }
 
     /**
@@ -142,6 +137,7 @@ class HardwareController extends Controller
             return response()->json($e->getMessage(), 422);
         }
     }
+    // add customer history
     public function addCustomerHistory($customerId, $userId, $transType, $des)
     {
         CustomerHistory::create([

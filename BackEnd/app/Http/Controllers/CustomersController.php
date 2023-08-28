@@ -2,48 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CustomerRequest;
+use App\Http\Resources\CustomerResource;
 use App\Models\Customers;
-
+use App\Helpers\ResponseHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class CustomersController extends Controller
 {
-    protected $validate_input_arr = [
-        'name' => 'required|string|max:100',
-        'mobile' => 'required|string|max:14',
-        'customer_type' => 'required|string',
-        'monthly_bill' => 'required|numeric',
-        'additional_charge' => 'required|numeric',
-        'discount' => 'required|numeric',
-        'active' => 'required|boolean',
-        'connection_date' => 'nullable|date',
-        'note' => 'nullable|string',
-        'bill_collector' => 'nullable|string',
-        'number_of_connection' => 'nullable|integer'
-    ];
+    use ResponseHelper;
+
 
     //    Get all customers
     function index()
     {
-//        $total_diposit = Customers::all()->diposit()->sum('add_deposit');
-//        return $total_diposit;
-        return response()->json(['data' => Customers::with(['customer_address' => function ($query) {
+        $customers = Customers::with(['customer_address' => function ($query) {
             $query->latest()->limit(1);
         }])->withCount(['diposit as deposit' => function ($query) {
             $query->select(DB::raw('sum(add_deposit) - sum(return_deposit)'));
-        }])->get(), 'message' => "All Customers Get Successfully"]);
+        }])->get();
+//        return response()->json(['data' => $customers]);
+        return CustomerResource::collection($customers);
     }
 
     //    Create new Customer
-    function create(Request $request)
+    function create(CustomerRequest $request)
     {
-        $validator = Validator::make($request->all(), $this->validate_input_arr);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
+        $request->validate();
 
         try {
             $new_customer = Customers::create([
@@ -60,9 +47,19 @@ class CustomersController extends Controller
                 'number_of_connection' => $request->number_of_connection
             ]);
 
-            return response()->json(['data' => $new_customer, 'message' => "Customer Created Successfully"], 200);
+            $new_customer->customer_address()->create([
+                'house' => $request->house,
+                'flat' => $request->flat,
+                'road' => $request->road,
+                'building_name' => $request->buildingName,
+                'area' => $request->area,
+                'customer_id' => $request->customerId,
+            ]);
+
+            return new CustomerResource($new_customer);
+
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 500);
+            return $this->response_helper($e->getMessage());
         }
     }
 
@@ -72,22 +69,19 @@ class CustomersController extends Controller
             $customer = Customers::find($id);
             if ($customer) {
                 $customer->delete();
-                return response()->json(['data' => [], 'message' => 'Customer Delete Success']);
+                return $this->response_helper('Customer Delete Success');
             } else {
-                return response()->json(['data' => [], 'message' => "Sorry we didn't find customer"]);
+                return $this->response_helper("Sorry we didn't find customer");
             }
         } catch (\Exception $error) {
-            return response()->json(['data' => [], 'message' => $error->getMessage()], 500);
+            return $this->response_helper($error->getMessage());
         }
     }
 
-    function customer_update(Request $request, $id)
+    function customer_update(CustomerRequest $request, $id)
     {
-        $validator = Validator::make($request->all(), $this->validate_input_arr);
+        $request->validate();
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
         try {
             $new_customer = Customers::find($id);
 
@@ -105,9 +99,9 @@ class CustomersController extends Controller
                 'number_of_connection' => $request->number_of_connection
             ]);
             $new_customer->refresh();
-            return response()->json(['data' => $new_customer, 'message' => "Customer Created Successfully"], 200);
+            return new CustomerResource($new_customer);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 500);
+            return $this->response_helper($e->getMessage());
         }
     }
 }
