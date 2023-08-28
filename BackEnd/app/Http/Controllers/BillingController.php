@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
 use App\Http\Resources\BillingResource;
 use App\Models\Billing;
 use App\Models\Customers;
@@ -11,18 +12,16 @@ use Exception;
 
 class BillingController extends Controller
 {
+    use ResponseHelper;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        try {
-            $billings = Billing::with('customer')->latest()->get();
-            return BillingResource::collection($billings);
-        }catch (Exception $e){
-            return response()->json(['data' => [], 'message' => $e->getMessage()], 500);
-        }
+
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -44,7 +43,13 @@ class BillingController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $billings = Billing::where('customer_id', $id)->with(['payments.user', 'customer'])->latest()->firstOrFail();
+            return new BillingResource($billings);
+        } catch (\Exception $err) {
+            return $this->response_helper($err->getMessage());
+        }
+
     }
 
     /**

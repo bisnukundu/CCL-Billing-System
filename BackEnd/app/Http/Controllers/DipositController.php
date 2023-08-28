@@ -41,6 +41,7 @@ class DipositController extends Controller
     public function show(string $id)
     {
         $deposit = Customers::find($id)->diposit()->with(['user', 'customer'])->get();
+
         return DepositResource::collection($deposit);
     }
 

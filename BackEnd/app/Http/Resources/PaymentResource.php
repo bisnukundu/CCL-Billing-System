@@ -15,7 +15,13 @@ class PaymentResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id
+            'id' => $this->id,
+            'collection_amount' => $this->collection_amount,
+            'collection_type' => $this->collection_type,
+            'user_id' => $this->user_id,
+            'billing_id' => $this->billing_id,
+            'user' => $this->user,
+            'billing' => new BillingResource($this->billing)
         ];
     }
 }

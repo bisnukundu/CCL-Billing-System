@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
+use App\Http\Requests\PaymentRequest;
+use App\Http\Resources\BillingResource;
 use App\Http\Resources\PaymentResource;
+use App\Models\Billing;
 use App\Models\CustomerHistory;
 use App\Models\Customers;
 use App\Models\Payment;
@@ -12,6 +16,8 @@ use Illuminate\Support\Facades\Validator;
 
 class PaymentController extends Controller
 {
+    use ResponseHelper;
+
     /**
      * Display a listing of the resource.
      */
@@ -31,19 +37,10 @@ class PaymentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PaymentRequest $request)
     {
-        // billingId (will get bill), UserId (session or cookies), paymentAmount (direct)
-        $rules = [
-            'paymentAmount' => 'required|numeric|min:10',
-            'paymentType' => 'required|string'
-        ];
 
-        $validate = Validator::make($request->all(), $rules);
-
-        if ($validate->fails()) {
-            return response()->json($validate->errors(), 422);
-        }
+        $request->validated();
 
         try {
             $data = Payment::create([
@@ -55,8 +52,8 @@ class PaymentController extends Controller
             CustomerHistory::create([
                 'transection_type' => 'New Payment',
                 'description' => $request->paymentAmount . ' New Payment Received!',
-                'customer_id' => 1,
-                'user_id' => 1,
+                'customer_id' => 1, // It will be dynamic
+                'user_id' => 1, // It will be dynamic
             ]);
             return response()->json(['message' => 'success', 'data' => $data], 200);
 
@@ -70,22 +67,14 @@ class PaymentController extends Controller
      */
     public function show(string $id)
     {
-        /**
-         *  I think this query is technically wrong. We show payment record by payment id, or if we want to show payment record by customer id those case query will be different.
-         *  $payment = Billing::where('customer_id', $id)->first(); //If we want to get bill by customer id
-         *  $payment = Billing::findOrFail($id); //If we want to get bill by payment id
-         *  return new BillingResource($payment);
-         *  //Remove this note after review the code
-         * */
-        $billAndPayment = Customers::with(['billings' => function ($q) {
-            $q->latest('created_at')->take(1);
-        }, 'billings.payments.user'])->where('id', $id)->get();
-
-        if ($billAndPayment->count() > 0) {
-            return response()->json(["message" => 'Success', "data" => $billAndPayment]);
-        } else {
-            return response()->json(['message' => 'Error', 'data' => 'No data Found or Invalid Id']);
+        try {
+            $payments = Payment::with(['billing.customer', 'user'])->where('id', $id)->firstOrFail();
+            return new PaymentResource($payments);
+        } catch (\Exception $err) {
+            return $this->response_helper($err->getMessage());
         }
+
+
     }
 
     /**
@@ -93,46 +82,27 @@ class PaymentController extends Controller
      */
     public function edit(string $id)
     {
-        $editPayment = Customers::with(['billings' => function ($q) {
-            $q->latest('created_at')->take(1);
-        }, 'billings.payments.user'])->where('id', $id)->get();
 
-        if ($editPayment->count() > 0) {
-            return response()->json(["message" => 'Success', "data" => $editPayment]);
-        } else {
-            return response()->json(['message' => 'Error', 'data' => 'No data Found or Invalid Id']);
-        }
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PaymentRequest $request, string $id)
     {
 
-        $validate = Validator::make(
-            $request->all(),
-            [
-                'paymentAmount' => 'required|numeric|min:10',
-                'paymentType' => 'required|string'
-            ]
-        );
-
-        if ($validate->fails()) {
-            return response()->json($validate->errors(), 422);
-        }
+        $request->validated();
 
         try {
             $updatePayment = Payment::find($id);
             if ($updatePayment) {
-
                 $updatePayment->collection_amount = $request->paymentAmount;
                 $updatePayment->collection_type = $request->paymentType;
                 $updatePayment->save();
-
-                return response()->json(['message' => 'Payment Successfully Updated!'], 200);
+                return new PaymentResource($updatePayment);
             } else {
-                return response()->json(['message' => 'Error', 'data' => 'No data Found or Invalid Id']);
+                return $this->response_helper('No data Found or Invalid Id');
             }
         } catch (Exception $e) {
             return response()->json($e->getMessage(), 422);
@@ -145,16 +115,11 @@ class PaymentController extends Controller
     public function destroy(string $id)
     {
         try {
-            $deletePayment = Payment::find($id);
-            if ($deletePayment) {
-
-                $deletePayment->delete();
-                return response()->json(['message' => 'Payment has been deleted!'], 200);
-            } else {
-                return response()->json(['message' => 'Error', 'data' => 'No data Found or Invalid Id']);
-            }
+            $deletePayment = Payment::findOrFail($id);
+            $deletePayment->delete();
+            return $this->response_helper('Payment has been deleted!');
         } catch (Exception $e) {
-            return response()->json($e->getMessage(), 422);
+            return $this->response_helper($e->getMessage());
         }
     }
 }

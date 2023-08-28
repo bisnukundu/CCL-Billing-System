@@ -10,7 +10,7 @@ use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\HardwareController;
 
 // Nafiz start
-Route::resource('/billing-history', BillingController::class);
+Route::resource('/billing', BillingController::class);
 Route::resource('/payment', PaymentController::class);
 Route::resource('/address', CustomerAddressController::class);
 Route::resource('/hardware', HardwareController::class);

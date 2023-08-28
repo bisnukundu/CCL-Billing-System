@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\CustomerAddressResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\CustomerAddressResource;
 
 /**
  * @property mixed $customer_address
@@ -49,7 +49,7 @@ class CustomerResource extends JsonResource
             "bill_collector" => $this->bill_collector,
             "number_of_connection" => $this->number_of_connection,
             "deposit" => $this->deposit,
-            "customer_address" => CustomerAddressResource::collection($this->customer_address),
+            "customer_address" => $this->whenNotNull(CustomerAddressResource::collection($this->customer_address)),
         ];
 
     }
