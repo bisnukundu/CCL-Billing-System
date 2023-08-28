@@ -18,9 +18,9 @@ class HardwareFactory extends Factory
     public function definition(): array
     {
         return [
-            'stb_id' => fake()->numberBetween(1000000000,900000000),
-            'stb_type' => fake()->randomElement(['P', 'C1', 'C2', 'C3']),
-            'customer_id' => fake()->randomElement(Customers::pluck('id')->toArray()),
+            'stb_id' => fake()->numberBetween(1000000000, 900000000),
+            'status' => fake()->randomElement(['Good', 'Problem', 'On Repari']),
+            'remarks' => fake()->randomElement(['Uploaded', 'Old']),
         ];
     }
 }

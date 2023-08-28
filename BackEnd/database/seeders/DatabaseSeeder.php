@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
                 BillingSeeder::class,
                 PaymentSeeder::class,
                 HardwareSeeder::class,
+                CustomerHardwareSeeder::class
             ]
         );
     }

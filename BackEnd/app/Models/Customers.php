@@ -31,9 +31,9 @@ class Customers extends Model
     // {
     //     return $this->hasMany(Billing::class, 'customer_id');
     // }
-    public function hardware()
+    public function CustomerHardware()
     {
-        return $this->hasMany(Hardeware::class, 'customer_id');
+        return $this->hasMany(CustomerHardware::class, 'customer_id');
     }
     // Nafiz End
     public function diposit()

@@ -11,8 +11,8 @@ class Hardware extends Model
 
     protected $fillable = ["stb_id", "stb_type", "customer_id"];
 
-    public function customer()
+    public function CustomerHardware()
     {
-        return $this->belongsTo(Customers::class);
+        return $this->hasMany(Hardware::class, 'hardware_id');
     }
 }

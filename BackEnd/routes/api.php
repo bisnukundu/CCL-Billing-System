@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\CustomerAddressController;
+use App\Http\Controllers\CustomerHardwareController;
 use App\Http\Controllers\CustomerHistoryController;
 use App\Http\Controllers\PaymentController;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ Route::resource('/billing-history', BillingController::class);
 Route::resource('/payment', PaymentController::class);
 Route::resource('/address', CustomerAddressController::class);
 Route::resource('/hardware', HardwareController::class);
+Route::resource('/customer-hardware', CustomerHardwareController::class);
 Route::resource('/history', CustomerHistoryController::class);
 // Nafiz End
 
