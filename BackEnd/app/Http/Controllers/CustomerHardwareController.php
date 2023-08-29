@@ -22,7 +22,8 @@ class CustomerHardwareController extends Controller
     {
         // $allHardware = Hardware::all();
         $allHardware = CustomerHardware::with('customer', 'hardware')->get();
-        return response()->json(['message' => 'Success', 'data' => $allHardware]);
+        return CustomerHardwareResource::collection($allHardware);
+        // return response()->json(['message' => 'Success', 'data' => $allHardware]);
     }
 
     /**
