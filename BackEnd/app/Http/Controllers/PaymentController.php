@@ -90,15 +90,13 @@ class PaymentController extends Controller
         $request->validated();
 
         try {
-            $updatePayment = Payment::find($id);
-            if ($updatePayment) {
-                $updatePayment->collection_amount = $request->paymentAmount;
-                $updatePayment->collection_type = $request->paymentType;
-                $updatePayment->save();
-                return new PaymentResource($updatePayment);
-            } else {
-                return $this->response_helper('No data Found or Invalid Id');
-            }
+            $updatePayment = Payment::findOrFail($id);
+
+            $updatePayment->collection_amount = $request->paymentAmount;
+            $updatePayment->collection_type = $request->paymentType;
+            $updatePayment->save();
+            return new PaymentResource($updatePayment);
+
         } catch (Exception $e) {
             return response()->json($e->getMessage(), 422);
         }

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -10,45 +14,28 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    function login(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+    use ResponseHelper;
 
-        if ($validator->fails()) {
-            return response()->json(['data' => [], 'message' => $validator->errors()], 422);
-        }
+    function login(LoginRequest $request)
+    {
+        $request->validated();
 
         try {
             $credentials = ['email' => $request->email, 'password' => $request->password];
 
             if (!$token = auth()->attempt($credentials)) {
-                return response()->json(['error' => 'Unauthorized'], 401);
+                return $this->response_helper('Unauthorized', 401);
             }
             return $token;
 
         } catch (\Exception $err) {
-            return response()->json(['data' => [], 'message' => $err->getMessage()], 500);
+            return $this->response_helper($err->getMessage(), 500);
         }
-
-
     }
 
-    function register(Request $request)
+    function register(RegisterRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
-            'name' => 'required|string',
-            'nid' => 'numeric',
-            'mobile' => 'required|string|unique:users'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['data' => [], 'message' => $validator->errors()], 422);
-        }
+      $request->validated();
         try {
             $user = User::create([
                 'email' => $request->email,
@@ -58,10 +45,9 @@ class AuthController extends Controller
                 'mobile' => $request->mobile,
                 'role' => $request->role
             ]);
-
-            return response()->json(['data' => $user, 'message' => 'User register successfully']);
+            return (new UserResource($user))->additional(['message' => 'User register successfully']);
         } catch (\Exception $err) {
-            return response()->json(['data' => [], 'message' => $err->getMessage()], 500);
+            return $this->response_helper($err->getMessage());
         }
 
 
