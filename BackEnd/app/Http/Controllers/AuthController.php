@@ -26,7 +26,7 @@ class AuthController extends Controller
             if (!$token = auth()->attempt($credentials)) {
                 return $this->response_helper('Unauthorized', 401);
             }
-            return $token;
+            return $this->respondWithToken($token);
 
         } catch (\Exception $err) {
             return $this->response_helper($err->getMessage(), 500);
@@ -35,7 +35,7 @@ class AuthController extends Controller
 
     function register(RegisterRequest $request)
     {
-      $request->validated();
+        $request->validated();
         try {
             $user = User::create([
                 'email' => $request->email,
@@ -49,7 +49,20 @@ class AuthController extends Controller
         } catch (\Exception $err) {
             return $this->response_helper($err->getMessage());
         }
+    }
 
+    public function logout()
+    {
+        auth()->logout();
+        return $this->response_helper('Successfully logged out', 200);
+    }
 
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 }

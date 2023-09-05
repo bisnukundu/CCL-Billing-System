@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -21,7 +22,7 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'mobile' => fake()->phoneNumber(),
-            'role' => fake()->randomElement(['bc', 'ac']),
+            'role' => fake()->randomElement([UserRole::Accountant, UserRole::BillCollector, UserRole::Admin]),
             'nid' => fake()->creditCardNumber,
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
 
