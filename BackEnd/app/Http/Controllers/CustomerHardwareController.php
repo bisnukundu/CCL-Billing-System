@@ -20,10 +20,9 @@ class CustomerHardwareController extends Controller
      */
     public function index()
     {
-        // $allHardware = Hardware::all();
+
         $allHardware = CustomerHardware::with('customer', 'hardware')->get();
         return CustomerHardwareResource::collection($allHardware);
-        // return response()->json(['message' => 'Success', 'data' => $allHardware]);
     }
 
     /**
@@ -45,15 +44,12 @@ class CustomerHardwareController extends Controller
                 'hardware_id' => $request->hardwareId,
                 'customer_id' => $request->customerId,
             ]);
-            if ($newHardware) {
-                // add customer history
-                // get user id from session
-                $this->addCustomerHistory($request->customerId, 1, 'New Hardware', $request->stbId . ' Hardware assign to customer!');
-                return new CustomerHardwareResource($newHardware);
-                // return response()->json(['message' => 'New Hardware added!', "data" => $newHardware]);
-            } else {
-                return response()->json(["message" => 'Something went wrong!']);
-            }
+            // add customer history
+            // get user id from session
+            $this->addCustomerHistory($request->customerId, 1, 'New Hardware', $request->stbId . ' Hardware assign to customer!');
+            return new CustomerHardwareResource($newHardware);
+            // return response()->json(['message' => 'New Hardware added!', "data" => $newHardware]);
+
         } catch (\Exception $e) {
             return $this->response_helper($e->getMessage());
         }
@@ -130,14 +126,5 @@ class CustomerHardwareController extends Controller
             return $this->response_helper($e->getMessage());
         }
     }
-    // add customer history
-    public function addCustomerHistory($customerId, $userId, $transType, $des)
-    {
-        CustomerHistory::create([
-            'transection_type' => $transType,
-            'description' => $des,
-            'customer_id' => $customerId,
-            'user_id' => $userId, // get user id from session or cookies
-        ]);
-    }
+    
 }

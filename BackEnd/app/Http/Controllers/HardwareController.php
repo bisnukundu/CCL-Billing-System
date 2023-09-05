@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
+use App\Http\Requests\HardwareRequest;
 use App\Http\Resources\HardwareResource;
 use App\Models\Hardware;
 use Illuminate\Http\Request;
@@ -10,12 +12,13 @@ use Illuminate\Support\Facades\Validator;
 
 class HardwareController extends Controller
 {
+    use ResponseHelper;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return HardwareResource::collection(Hardware::with('customer')->latest()->get());
+        return HardwareResource::collection(Hardware::get());
     }
 
     /**
@@ -83,34 +86,20 @@ class HardwareController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(HardwareRequest $request, string $id)
     {
-        $validate = Validator::make(
-            $request->all(),
-            [
-                'stbId' => 'required|min:10',
-                'stbType' => 'required|string'
-            ]
-        );
-
-        if ($validate->fails()) {
-            return response()->json($validate->errors(), 422);
-        }
+        $request->validated();
 
         try {
-            $updateHardware = Hardware::find($id);
-            if ($updateHardware) {
+            $updateHardware = Hardware::findOrFail($id);
+            $updateHardware->stb_id = $request->stbId;
+            $updateHardware->status = $request->status;
+            $updateHardware->remarks = $request->remarks;
 
-                $updateHardware->stb_id = $request->stbId;
-                $updateHardware->stb_type = $request->stbType;
-                $updateHardware->customer_id = $request->customerId;
-                $updateHardware->save();
-                //create history
-                $this->addCustomerHistory($request->customerId, 1, 'Hardware Modify', $request->stbId . ' Modified hardware assign to customer!');
-                return response()->json(['message' => 'Hardware Successfully Updated!'], 200);
-            } else {
-                return response()->json(['message' => 'Error', 'data' => 'No data Found or Invalid Id']);
-            }
+            $updateHardware->save();
+            //create history
+            $this->addCustomerHistory($request->customerId, 1, 'Hardware Modify', $request->stbId . ' Modified hardware assign to customer!');
+            return response()->json(['message' => 'Hardware Successfully Updated!'], 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 422);
         }
@@ -136,15 +125,5 @@ class HardwareController extends Controller
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 422);
         }
-    }
-    // add customer history
-    public function addCustomerHistory($customerId, $userId, $transType, $des)
-    {
-        CustomerHistory::create([
-            'transection_type' => $transType,
-            'description' => $des,
-            'customer_id' => $customerId,
-            'user_id' => $userId, // get user id from session or cookies
-        ]);
     }
 }

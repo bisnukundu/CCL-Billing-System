@@ -20,8 +20,8 @@ class CustomerHardwareResource extends JsonResource
             'customer_id' => $this->customer_id,
             'hardware_id' => $this->hardware_id,
             'created_at' => $this->created_at,
-            'customer' => new CustomerResource($this->customer),
-            'hardware' => $this->whenNotNull(HardwareResource::collection($this->hardware))
+            'customer' => new CustomerResource($this->whenLoaded('customer')),
+            'hardware' => new HardwareResource($this->whenLoaded('hardware'))
         ];
     }
 }

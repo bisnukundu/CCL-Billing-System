@@ -26,10 +26,9 @@ class HardwareResource extends JsonResource
       return [
         "id"            => $this->id,
         "stb_id"        => $this->stb_id,
-        "stb_type"      => $this->stb_type,
-        "customer"      => new CustomerResource($this->customer),
+        "status"        => $this->status,
+        "remarks"       => $this->remarks,
         "created_at"    => $this->created_at,
-        "updated_at"    => $this->updated_at
       ];
     }
 }
