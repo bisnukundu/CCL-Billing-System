@@ -10,28 +10,25 @@ class UserRolePolicy
 
 
 //    Bill Collector Authorization
-    public function bc(User $user): bool
+    public function bc(User $user, UserRole $role): bool
     {
-        return $user->role === UserRole::BillCollector;
+        return $user->role === $role;
     }
 
     //    Admin Authorization
-    function admin(User $user): bool
+    function admin(User $user, UserRole $role): bool
     {
-        return $user->role === UserRole::Admin;
+        return $user->role === $role;
     }
 
     //    Accountant Authorization
-    function ac(User $user): bool
+    function ac(User $user, UserRole $role): bool
     {
-        return $user->role === UserRole::Accountant;
+        return $user->role === $role;
     }
 
     // Multiple Role Authorization
-    function any(User $user, array $roles): bool
-    {
-        return in_array($user->role, $roles);
-    }
+
 
 
 }
