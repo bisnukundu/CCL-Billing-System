@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\HardwareController;
+use \Illuminate\Support\Facades\Gate;
 
 // Nafiz start
 Route::resource('/billing', BillingController::class);
@@ -28,8 +29,12 @@ Route::put('customer/{id}', [CustomersController::class, 'customer_update']);
 Route::resource('/diposit', \App\Http\Controllers\DipositController::class);
 
 Route::get('/test', function () {
+
+    Gate::authorize('any', [\App\Enums\UserRole::Admin, \App\Enums\UserRole::BillCollector]);
+
     return \App\Models\User::all();
 });
+
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout']);
