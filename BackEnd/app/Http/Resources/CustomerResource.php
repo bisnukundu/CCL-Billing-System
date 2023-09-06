@@ -49,7 +49,7 @@ class CustomerResource extends JsonResource
             "bill_collector" => $this->bill_collector,
             "number_of_connection" => $this->number_of_connection,
             "deposit" => $this->deposit,
-            "customer_address" => $this->whenNotNull(CustomerAddressResource::collection($this->customer_address)),
+            "customer_address" => $this->whenNotNull(CustomerAddressResource::collection($this->whenLoaded('customer_address'))),
         ];
 
     }
