@@ -29,7 +29,7 @@ Route::put('customer/{id}', [CustomersController::class, 'customer_update']);
 Route::resource('/diposit', \App\Http\Controllers\DipositController::class);
 
 Route::get('/test', function () {
-    Gate::authorize('admin', \App\Enums\UserRole::Admin);
+    Gate::authorize('ac', \App\Models\User::class);
     return \App\Models\User::all();
 });
 

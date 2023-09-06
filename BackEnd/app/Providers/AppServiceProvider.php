@@ -25,8 +25,8 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
 //        Now we will see the sql query in our terminal | by bisnu
-        DB::listen(function ($query) {
-            \Laravel\Prompts\info($query->sql);
-        });
+//        DB::listen(function ($query) {
+//            \Laravel\Prompts\info($query->sql);
+//        });
     }
 }
